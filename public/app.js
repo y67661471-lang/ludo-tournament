@@ -100,8 +100,338 @@ async function showTeamLobby(type) {
     color:white;
   `;
 
-
   lobby.innerHTML = `
+
+  <div style="
+    text-align:center;
+    color:#ffc400;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:8px;
+  ">
+    🎲 ${type} Team Match
+  </div>
+
+  <div style="
+    text-align:center;
+    color:#d7def5;
+    margin-bottom:20px;
+    font-size:17px;
+  ">
+    4 Players • 2 vs 2
+  </div>
+
+
+  <!-- MATCH INFORMATION -->
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:20px;
+  ">
+
+    <div style="
+      background:#172b60;
+      border:1px solid #40558e;
+      border-radius:14px;
+      padding:14px 5px;
+      text-align:center;
+    ">
+      <div style="font-size:25px;">
+        👥
+      </div>
+
+      <div style="
+        color:#ffc400;
+        font-weight:bold;
+        font-size:18px;
+      ">
+        4
+      </div>
+
+      <small>
+        Players
+      </small>
+    </div>
+
+
+    <div style="
+      background:#172b60;
+      border:1px solid #ff4444;
+      border-radius:14px;
+      padding:14px 5px;
+      text-align:center;
+    ">
+      <div style="font-size:25px;">
+        🔴
+      </div>
+
+      <div style="
+        color:#ff5555;
+        font-weight:bold;
+        font-size:18px;
+      ">
+        2
+      </div>
+
+      <small>
+        Team A
+      </small>
+    </div>
+
+
+    <div style="
+      background:#172b60;
+      border:1px solid #448aff;
+      border-radius:14px;
+      padding:14px 5px;
+      text-align:center;
+    ">
+      <div style="font-size:25px;">
+        🔵
+      </div>
+
+      <div style="
+        color:#448aff;
+        font-weight:bold;
+        font-size:18px;
+      ">
+        2
+      </div>
+
+      <small>
+        Team B
+      </small>
+    </div>
+
+  </div>
+
+
+  <!-- ROOM -->
+
+  <div style="
+    background:#0b1738;
+    border:2px solid #ffc400;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:20px;
+  ">
+
+    <div style="
+      text-align:center;
+      color:#ffc400;
+      font-size:18px;
+      font-weight:bold;
+      margin-bottom:10px;
+    ">
+      🔑 TEAM ROOM
+    </div>
+
+
+    <button
+      onclick="createRoom()"
+      style="
+        width:100%;
+        padding:14px;
+        border:0;
+        border-radius:12px;
+        background:#ffc400;
+        color:#111;
+        font-size:17px;
+        font-weight:bold;
+        margin-bottom:12px;
+      "
+    >
+      🏠 CREATE NEW ROOM
+    </button>
+
+
+    <div style="
+      display:flex;
+      gap:8px;
+    ">
+
+      <input
+        id="room-code-input"
+        placeholder="Enter Room Code"
+        maxlength="6"
+        style="
+          flex:1;
+          padding:13px;
+          border-radius:10px;
+          border:1px solid #40558e;
+          background:#172b60;
+          color:white;
+          outline:none;
+          text-transform:uppercase;
+        "
+      >
+
+      <button
+        onclick="joinRoom()"
+        style="
+          padding:13px 18px;
+          border:0;
+          border-radius:10px;
+          background:#0bc83b;
+          color:white;
+          font-weight:bold;
+        "
+      >
+        JOIN
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ROOM INFO -->
+
+  <div
+    id="room-info"
+    style="
+      text-align:center;
+      background:#172b60;
+      padding:15px;
+      border-radius:15px;
+      margin-bottom:18px;
+    "
+  >
+    🔑 Create or join a room
+  </div>
+
+
+  <!-- TEAM A -->
+
+  <div style="
+    background:#172b60;
+    border:2px solid #ff4444;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+  ">
+
+    <h2 style="
+      color:#ff5555;
+      margin-bottom:5px;
+    ">
+      🔴 TEAM A
+    </h2>
+
+    <div style="
+      color:#cbd5f5;
+      font-size:14px;
+      margin-bottom:10px;
+    ">
+      2 Players
+    </div>
+
+    <div
+      id="teamA"
+      style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+      "
+    ></div>
+
+    <button
+      id="join-team-a"
+      onclick="joinTeam('A')"
+      style="
+        width:100%;
+        margin-top:15px;
+        padding:14px;
+        border:0;
+        border-radius:12px;
+        background:#ff4444;
+        color:white;
+        font-size:18px;
+        font-weight:bold;
+      "
+    >
+      JOIN TEAM A
+    </button>
+
+  </div>
+
+
+  <!-- TEAM B -->
+
+  <div style="
+    background:#172b60;
+    border:2px solid #448aff;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+  ">
+
+    <h2 style="
+      color:#448aff;
+      margin-bottom:5px;
+    ">
+      🔵 TEAM B
+    </h2>
+
+    <div style="
+      color:#cbd5f5;
+      font-size:14px;
+      margin-bottom:10px;
+    ">
+      2 Players
+    </div>
+
+    <div
+      id="teamB"
+      style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+      "
+    ></div>
+
+    <button
+      id="join-team-b"
+      onclick="joinTeam('B')"
+      style="
+        width:100%;
+        margin-top:15px;
+        padding:14px;
+        border:0;
+        border-radius:12px;
+        background:#448aff;
+        color:white;
+        font-size:18px;
+        font-weight:bold;
+      "
+    >
+      JOIN TEAM B
+    </button>
+
+  </div>
+
+
+  <!-- STATUS -->
+
+  <div
+    id="team-status"
+    style="
+      text-align:center;
+      padding:15px;
+      background:#0b1738;
+      border-radius:12px;
+      color:#ffc400;
+      font-weight:bold;
+    "
+  >
+    👥 Waiting for 4 Players...
+  </div>
+
+`;
 
     <div style="
       text-align:center;
