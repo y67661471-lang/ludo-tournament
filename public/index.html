@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ludo Tournament</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #07122f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .header {
+      padding: 20px;
+      background: #101d49;
+      border-bottom: 2px solid #ffc400;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffc400;
+    }
+
+    .wallet {
+      background: #17295d;
+      border: 2px solid #ffc400;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .welcome h1 {
+      color: #ffc400;
+      margin-bottom: 10px;
+    }
+
+    .welcome p {
+      line-height: 1.5;
+    }
+
+    .match {
+      background: #132653;
+      border: 2px solid #263f7d;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    .match h2 {
+      color: #ffc400;
+      margin-bottom: 15px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 18px;
+    }
+
+    .entry {
+      color: #ffc400;
+      font-weight: bold;
+    }
+
+    .reward {
+      color: #20e060;
+      font-weight: bold;
+    }
+
+    .start-btn {
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      padding: 16px;
+      margin-top: 15px;
+      background: #0bc83b;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .start-btn:hover {
+      background: #08a932;
+    }
+
+    .security {
+      background: #0c1838;
+      border: 1px solid #263f7d;
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 25px;
+    }
+
+    .security h3 {
+      color: #00d9ff;
+      margin-bottom: 12px;
+    }
+
+    .security p {
+      margin: 8px 0;
+      color: #cbd5f5;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #101d49;
+      border-top: 2px solid #263f7d;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 5px;
+      z-index: 1000;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: #9caad0;
+      font-size: 14px;
+    }
+
+    .nav-item.active {
+      color: #ffc400;
+      font-weight: bold;
+    }
+
+    .space {
+      height: 90px;
+    }
+
+    .connection-status {
+      text-align: center;
+      margin: 15px 0;
+      padding: 10px;
+      border-radius: 10px;
+      background: #0c1838;
+      color: #20e060;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">🎲 Ludo Tournament</div>
+
+    <div class="wallet">
+      💰 0 ৳
+    </div>
+  </header>
+
+
+  <main class="container">
+
+    <section class="welcome">
+
+      <h1>🏆 Play & Win</h1>
+
+      <p>
+        Join Ludo tournaments and compete with other players.
+      </p>
+
+    </section>
+
+
+    <div
+      id="connection-status"
+      class="connection-status"
+    >
+      🔄 Connecting to secure server...
+    </div>
+
+
+    <!-- BRONZE -->
+
+    <div class="match">
+
+      <h2>👑 Bronze 🥉</h2>
+
+      <div class="row">
+        <span>Entry Fee:</span>
+
+        <span class="entry">
+          10 ৳
+        </span>
+      </div>
+
+      <div class="row">
+        <span>Win Reward:</span>
+
+        <span class="reward">
+          18 ৳
+        </span>
+      </div>
+
+      <button
+        class="start-btn"
+        onclick="startMatch('Bronze')"
+      >
+        ▶ START MATCH
+      </button>
+
+    </div>
+
+
+    <!-- SILVER -->
+
+    <div class="match">
+
+      <h2>👑 Silver 🥈</h2>
+
+      <div class="row">
+        <span>Entry Fee:</span>
+
+        <span class="entry">
+          20 ৳
+        </span>
+      </div>
+
+      <div class="row">
+        <span>Win Reward:</span>
+
+        <span class="reward">
+          36 ৳
+        </span>
+      </div>
+
+      <button
+        class="start-btn"
+        onclick="startMatch('Silver')"
+      >
+        ▶ START MATCH
+      </button>
+
+    </div>
+
+
+    <!-- GOLD -->
+
+    <div class="match">
+
+      <h2>👑 Gold 🥇</h2>
+
+      <div class="row">
+        <span>Entry Fee:</span>
+
+        <span class="entry">
+          50 ৳
+        </span>
+      </div>
+
+      <div class="row">
+        <span>Win Reward:</span>
+
+        <span class="reward">
+          90 ৳
+        </span>
+      </div>
+
+      <button
+        class="start-btn"
+        onclick="startMatch('Gold')"
+      >
+        ▶ START MATCH
+      </button>
+
+    </div>
+
+
+    <!-- SECURITY -->
+
+    <div class="security">
+
+      <h3>
+        🤖 High Security System
+      </h3>
+
+      <p>
+        🛡️ Automatic Anti-Cheat Checking
+      </p>
+
+      <p>
+        🎲 Server-Side Dice Validation
+      </p>
+
+      <p>
+        🔍 Suspicious Activity Detection
+      </p>
+
+      <p>
+        ⚡ Real-Time Game Validation
+      </p>
+
+      <p>
+        🔐 Secure Player Authentication
+      </p>
+
+    </div>
+
+
+    <div class="space"></div>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+
+  <nav class="bottom-nav">
+
+    <div class="nav-item active">
+      🏠
+      <br>
+      Home
+    </div>
+
+    <div class="nav-item">
+      💼
+      <br>
+      Wallet
+    </div>
+
+    <div class="nav-item">
+      👥
+      <br>
+      Refer
+    </div>
+
+    <div class="nav-item">
+      🎮
+      <br>
+      Game
+    </div>
+
+  </nav>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <script>
+
+    // =====================================
+    // SUPABASE CONFIGURATION
+    // =====================================
+
+    const SUPABASE_URL =
+      "https://ohrbvijivfwvmlgnhzmp.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_ywFDW9RIMqXOkBXky1p7vA_3KnoqJev";
+
+
+    // =====================================
+    // CREATE SUPABASE CLIENT
+    // =====================================
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // =====================================
+    // SUPABASE CONNECTION TEST
+    // =====================================
+
+    async function testSupabase() {
+
+      const status =
+        document.getElementById(
+          "connection-status"
+        );
+
+      try {
+
+        const { data, error } =
+          await supabaseClient
+            .from("match_rooms")
+            .select("id")
+            .limit(1);
+
+
+        if (error) {
+
+          console.error(
+            "Supabase Error:",
+            error
+          );
+
+          status.innerHTML =
+            "⚠️ Database connection needs checking";
+
+          status.style.color =
+            "#ffc400";
+
+          return;
+        }
+
+
+        console.log(
+          "Supabase Connected Successfully"
+        );
+
+
+        status.innerHTML =
+          "🟢 Secure Server Connected";
+
+        status.style.color =
+          "#20e060";
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Connection Error:",
+          error
+        );
+
+        status.innerHTML =
+          "🔴 Server connection failed";
+
+        status.style.color =
+          "#ff5555";
+      }
+
+    }
+
+
+    testSupabase();
+
+  </script>
+
+
+  <!-- YOUR GAME SYSTEM -->
+
+  <script src="app.js"></script>
+
+
+</body>
+</html>
