@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ludo Tournament</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#07122f;
+  color:white;
+  min-height:100vh;
+}
+
+.header{
+  padding:18px;
+  background:#101d49;
+  border-bottom:2px solid #ffc400;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:21px;
+  font-weight:bold;
+  color:#ffc400;
+}
+
+.wallet{
+  background:#17295d;
+  border:2px solid #ffc400;
+  padding:9px 14px;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+.container{
+  padding:18px;
+  max-width:700px;
+  margin:auto;
+  padding-bottom:100px;
+}
+
+.welcome{
+  text-align:center;
+  margin:20px 0;
+}
+
+.welcome h1{
+  color:#ffc400;
+  margin-bottom:10px;
+}
+
+.welcome p{
+  line-height:1.5;
+  color:#d7def5;
+}
+
+.connection-status{
+  text-align:center;
+  margin:15px 0;
+  padding:10px;
+  border-radius:10px;
+  background:#0c1838;
+  color:#20e060;
+}
+
+.level-title{
+  text-align:center;
+  color:#00d9ff;
+  font-size:22px;
+  font-weight:bold;
+  margin:25px 0 10px;
+}
+
+.match{
+  background:#132653;
+  border:2px solid #263f7d;
+  border-radius:22px;
+  padding:20px;
+  margin:16px 0;
+}
+
+.match h2{
+  color:#ffc400;
+  margin-bottom:15px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  font-size:17px;
+}
+
+.entry{
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.reward{
+  color:#20e060;
+  font-weight:bold;
+}
+
+.mode-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+.mode-btn{
+  border:0;
+  border-radius:13px;
+  padding:14px 7px;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.one-btn{
+  background:#7b4dff;
+}
+
+.team-btn-main{
+  background:#008cff;
+}
+
+.security{
+  background:#0c1838;
+  border:1px solid #263f7d;
+  border-radius:18px;
+  padding:18px;
+  margin-top:25px;
+}
+
+.security h3{
+  color:#00d9ff;
+  margin-bottom:12px;
+}
+
+.security p{
+  margin:9px 0;
+  color:#cbd5f5;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#101d49;
+  border-top:2px solid #263f7d;
+  display:flex;
+  justify-content:space-around;
+  padding:11px 5px;
+  z-index:2000;
+}
+
+.nav-item{
+  text-align:center;
+  color:#9caad0;
+  font-size:13px;
+}
+
+.nav-item.active{
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.space{
+  height:30px;
+}
+
+/* LOBBY */
+
+#game-lobby{
+  background:#101f4d;
+  border:2px solid #ffc400;
+  border-radius:22px;
+  padding:20px;
+  margin:20px auto;
+  max-width:650px;
+}
+
+.lobby-title{
+  text-align:center;
+  color:#ffc400;
+  font-size:26px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.lobby-subtitle{
+  text-align:center;
+  color:#d7def5;
+  margin-bottom:20px;
+}
+
+.room-box{
+  background:#0b1738;
+  border:2px solid #ffc400;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:18px;
+}
+
+.room-title{
+  text-align:center;
+  color:#ffc400;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.create-btn{
+  width:100%;
+  border:0;
+  background:#ffc400;
+  color:#111;
+  padding:14px;
+  border-radius:11px;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+
+.room-row{
+  display:flex;
+  gap:8px;
+}
+
+.room-input{
+  flex:1;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #40558e;
+  background:#172b60;
+  color:white;
+  outline:none;
+  text-transform:uppercase;
+}
+
+.join-room-btn{
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  background:#0bc83b;
+  color:white;
+  font-weight:bold;
+}
+
+.room-info{
+  text-align:center;
+  background:#172b60;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:18px;
+}
+
+.player-list{
+  background:#0b1738;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.player-item{
+  background:#172b60;
+  border-radius:10px;
+  padding:12px;
+  margin:7px 0;
+}
+
+.lobby-action{
+  width:100%;
+  border:0;
+  padding:15px;
+  border-radius:12px;
+  color:white;
+  background:#0bc83b;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.status-box{
+  text-align:center;
+  padding:15px;
+  background:#0b1738;
+  border-radius:12px;
+  color:#ffc400;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+/* BOARD */
+
+#ludo-board{
+  width:340px;
+  height:340px;
+  max-width:92vw;
+  margin:25px auto;
+  background:white;
+  border:5px solid #ffc400;
+  border-radius:15px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-template-rows:repeat(5,1fr);
+  gap:2px;
+  padding:5px;
+}
+
+.board-cell{
+  background:#e9edf5;
+  border:1px solid #777;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:#222;
+}
+
+.game-info{
+  text-align:center;
+  color:#ffc400;
+  font-size:19px;
+  font-weight:bold;
+  margin:15px;
+}
+
+.dice-btn{
+  display:block;
+  margin:15px auto;
+  padding:15px 30px;
+  background:#ffb000;
+  color:#111;
+  border:0;
+  border-radius:13px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:480px){
+  .mode-buttons{
+    grid-template-columns:1fr;
+  }
+
+  .room-row{
+    flex-direction:column;
+  }
+
+  .join-room-btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="logo">
+    🎲 Ludo Tournament
+  </div>
+
+  <div class="wallet">
+    💰 <span id="wallet-balance">0</span> ৳
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="welcome">
+
+  <h1>🏆 Play & Win</h1>
+
+  <p>
+    Choose your level and play online with other players.
+  </p>
+
+</section>
+
+
+<div
+  id="connection-status"
+  class="connection-status"
+>
+  🔄 Connecting to secure server...
+</div>
+
+
+<div class="level-title">
+  🎮 SELECT TOURNAMENT LEVEL
+</div>
+
+
+<!-- BRONZE -->
+
+<div class="match">
+
+  <h2>👑 Bronze 🥉</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">10 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">18 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Bronze','1v1',10,18)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Bronze','2v2',10,18)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- SILVER -->
+
+<div class="match">
+
+  <h2>👑 Silver 🥈</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">20 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">36 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Silver','1v1',20,36)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Silver','2v2',20,36)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- GOLD -->
+
+<div class="match">
+
+  <h2>👑 Gold 🥇</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">50 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">90 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Gold','1v1',50,90)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Gold','2v2',50,90)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- HEROIC -->
+
+<div class="match">
+
+  <h2>🏆 Heroic ⭐</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">100 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">180 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Heroic','1v1',100,180)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Heroic','2v2',100,180)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- MASTER -->
+
+<div class="match">
+
+  <h2>👑 Master 💠</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">200 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">360 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Master','1v1',200,360)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Master','2v2',200,360)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- GRANDMASTER -->
+
+<div class="match">
+
+  <h2>💎 Grandmaster 👑</h2>
+
+  <div class="row">
+    <span>Entry Fee:</span>
+    <span class="entry">500 ৳</span>
+  </div>
+
+  <div class="row">
+    <span>Win Reward:</span>
+    <span class="reward">900 ৳</span>
+  </div>
+
+  <div class="mode-buttons">
+
+    <button
+      class="mode-btn one-btn"
+      onclick="openMatch('Grandmaster','1v1',500,900)"
+    >
+      👤 1 vs 1 Online
+    </button>
+
+    <button
+      class="mode-btn team-btn-main"
+      onclick="openMatch('Grandmaster','2v2',500,900)"
+    >
+      👥 2 vs 2 Team
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="security">
+
+  <h3>
+    🤖 High Security System
+  </h3>
+
+  <p>🛡️ Automatic Anti-Cheat Checking</p>
+  <p>🎲 Server-Side Dice Validation</p>
+  <p>🔍 Suspicious Activity Detection</p>
+  <p>⚡ Real-Time Game Validation</p>
+  <p>🔐 Secure Player Authentication</p>
+  <p>🚫 Duplicate Room Protection</p>
+
+</div>
+
+<div class="space"></div>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <div class="nav-item active">
+    🏠<br>Home
+  </div>
+
+  <div class="nav-item">
+    💼<br>Wallet
+  </div>
+
+  <div class="nav-item">
+    👥<br>Refer
+  </div>
+
+  <div class="nav-item">
+    🎮<br>Game
+  </div>
+
+</nav>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+  "https://ohrbvijivfwvmlgnhzmp.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_ywFDW9RIMqXOkBXky1p7vA_3KnoqJev";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================
+   PLAYER
+===================================== */
+
+const playerId =
+  localStorage.getItem("ludo_player_id") ||
+  crypto.randomUUID();
+
+localStorage.setItem(
+  "ludo_player_id",
+  playerId
+);
+
+
+/* =====================================
+   GAME STATE
+===================================== */
+
+const gameState = {
+
+  level:null,
+
+  mode:null,
+
+  entry:0,
+
+  reward:0,
+
+  roomId:null,
+
+  roomCode:null,
+
+  players:[],
+
+  channel:null
+
+};
+
+
+/* =====================================
+   OPEN MATCH
+===================================== */
+
+function openMatch(
+  level,
+  mode,
+  entry,
+  reward
+){
+
+  gameState.level = level;
+
+  gameState.mode = mode;
+
+  gameState.entry = entry;
+
+  gameState.reward = reward;
+
+  showLobby();
+
+}
+
+
+/* =====================================
+   SHOW LOBBY
+===================================== */
+
+function showLobby(){
+
+  const old =
+    document.getElementById("game-lobby");
+
+  if(old){
+    old.remove();
+  }
+
+  const oldBoard =
+    document.getElementById("ludo-board");
+
+  if(oldBoard){
+    oldBoard.remove();
+  }
+
+  const oldInfo =
+    document.getElementById("game-info");
+
+  if(oldInfo){
+    oldInfo.remove();
+  }
+
+
+  const lobby =
+    document.createElement("div");
+
+  lobby.id = "game-lobby";
+
+
+  const isOneVsOne =
+    gameState.mode === "1v1";
+
+
+  lobby.innerHTML = `
+
+    <div class="lobby-title">
+      🎲 ${gameState.level}
+    </div>
+
+    <div class="lobby-subtitle">
+
+      ${isOneVsOne
+        ? "👤 1 vs 1 Online Match"
+        : "👥 2 vs 2 Team Match"}
+
+      <br>
+
+      Entry:
+      <b style="color:#ffc400;">
+        ${gameState.entry} ৳
+      </b>
+
+      &nbsp; | &nbsp;
+
+      Reward:
+      <b style="color:#20e060;">
+        ${gameState.reward} ৳
+      </b>
+
+    </div>
+
+
+    <div class="room-box">
+
+      <div class="room-title">
+        🔑 ONLINE ROOM
+      </div>
+
+
+      <button
+        class="create-btn"
+        onclick="createRoom()"
+      >
+        🏠 CREATE NEW ROOM
+      </button>
+
+
+      <div class="room-row">
+
+        <input
+          id="room-code-input"
+          class="room-input"
+          placeholder="ENTER ROOM CODE"
+          maxlength="6"
+        >
+
+        <button
+          class="join-room-btn"
+          onclick="joinRoom()"
+        >
+          JOIN
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="room-info"
+      class="room-info"
+    >
+      🔑 Create a room or enter a room code.
+    </div>
+
+
+    <div class="player-list">
+
+      <h3 style="color:#00d9ff;margin-bottom:10px;">
+        👥 Players
+      </h3>
+
+      <div id="players-container">
+        Waiting for players...
+      </div>
+
+    </div>
+
+
+    <button
+      class="lobby-action"
+      onclick="leaveLobby()"
+    >
+      ← BACK TO LEVELS
+    </button>
+
+
+    <div
+      id="team-status"
+      class="status-box"
+    >
+      ⏳ Waiting for players...
+    </div>
+
+  `;
+
+
+  const container =
+    document.querySelector(".container");
+
+  const security =
+    document.querySelector(".security");
+
+
+  container.insertBefore(
+    lobby,
+    security
+  );
+
+
+  window.scrollTo({
+    top:lobby.offsetTop - 20,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================
+   ROOM CODE
+===================================== */
+
+function generateRoomCode(){
+
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let code = "";
+
+  for(let i=0;i<6;i++){
+
+    code +=
+      chars[
+        Math.floor(
+          Math.random() * chars.length
+        )
+      ];
+
+  }
+
+  return code;
+
+}
+
+
+/* =====================================
+   CREATE ROOM
+===================================== */
+
+async function createRoom(){
+
+  if(!gameState.level){
+
+    alert("Select a level first.");
+
+    return;
+
+  }
+
+
+  const roomCode =
+    generateRoomCode();
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_rooms")
+      .insert({
+
+        room_code:roomCode,
+
+        match_type:
+          gameState.level,
+
+        mode:
+          gameState.mode,
+
+        status:"waiting"
+
+      })
+      .select()
+      .single();
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Room creation failed.\n\n" +
+      "Check match_rooms columns and RLS."
+    );
+
+    return;
+
+  }
+
+
+  gameState.roomId =
+    data.id;
+
+  gameState.roomCode =
+    data.room_code;
+
+
+  showRoomInfo();
+
+
+  await joinPlayer();
+
+
+  subscribeToRoom();
+
+
+  updateStatus(
+    "🟢 Room created. Waiting for opponent..."
+  );
+
+}
+
+
+/* =====================================
+   SHOW ROOM INFO
+===================================== */
+
+function showRoomInfo(){
+
+  const info =
+    document.getElementById(
+      "room-info"
+    );
+
+  if(!info){
+    return;
+  }
+
+
+  info.innerHTML = `
+
+    <div style="color:#9caad0;font-size:13px;">
+      ROOM CODE
+    </div>
+
+    <div style="
+      color:#ffc400;
+      font-size:30px;
+      font-weight:bold;
+      letter-spacing:5px;
+      margin:6px;
+    ">
+      ${gameState.roomCode}
+    </div>
+
+    <div style="
+      color:#20e060;
+      font-size:13px;
+    ">
+      Share this code with another player.
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================
+   JOIN ROOM
+===================================== */
+
+async function joinRoom(){
+
+  const input =
+    document.getElementById(
+      "room-code-input"
+    );
+
+
+  if(!input){
+    return;
+  }
+
+
+  const code =
+    input.value
+      .trim()
+      .toUpperCase();
+
+
+  if(!code){
+
+    alert("Enter Room Code.");
+
+    return;
+
+  }
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_rooms")
+      .select("*")
+      .eq("room_code",code)
+      .eq("status","waiting")
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Database error while finding room."
+    );
+
+    return;
+
+  }
+
+
+  if(!data){
+
+    alert(
+      "Room not found or match already started."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    data.mode !==
+    gameState.mode
+  ){
+
+    alert(
+      "This room is for another game mode."
+    );
+
+    return;
+
+  }
+
+
+  gameState.roomId =
+    data.id;
+
+  gameState.roomCode =
+    data.room_code;
+
+  gameState.level =
+    data.match_type;
+
+
+  showRoomInfo();
+
+
+  await loadPlayers();
+
+  await joinPlayer();
+
+  subscribeToRoom();
+
+
+  updateStatus(
+    "🟢 Room joined. Waiting for match..."
+  );
+
+}
+
+
+/* =====================================
+   JOIN PLAYER
+===================================== */
+
+async function joinPlayer(){
+
+  if(!gameState.roomId){
+    return;
+  }
+
+
+  const {data:existing,error} =
+    await supabaseClient
+      .from("match_players")
+      .select("*")
+      .eq(
+        "room_id",
+        gameState.roomId
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Could not load players."
+    );
+
+    return;
+
+  }
+
+
+  const players =
+    existing || [];
+
+
+  const already =
+    players.find(
+      p =>
+        p.player_id === playerId
+    );
+
+
+  if(already){
+
+    return;
+
+  }
+
+
+  const maxPlayers =
+    gameState.mode === "1v1"
+      ? 2
+      : 4;
+
+
+  if(players.length >= maxPlayers){
+
+    alert("Room is full.");
+
+    return;
+
+  }
+
+
+  const {error:insertError} =
+    await supabaseClient
+      .from("match_players")
+      .insert({
+
+        room_id:
+          gameState.roomId,
+
+        player_id:
+          playerId,
+
+        player_name:
+          "Player",
+
+        team:
+          gameState.mode === "2v2"
+            ? getAvailableTeam(players)
+            : null,
+
+        slot:
+          players.length + 1,
+
+        ready:false
+
+      });
+
+
+  if(insertError){
+
+    console.error(insertError);
+
+    alert(
+      "Unable to join match.\n\n" +
+      "Check match_players columns/RLS."
+    );
+
+    return;
+
+  }
+
+
+  await loadPlayers();
+
+}
+
+
+/* =====================================
+   TEAM ASSIGNMENT
+===================================== */
+
+function getAvailableTeam(players){
+
+  const A =
+    players.filter(
+      p => p.team === "A"
+    ).length;
+
+  const B =
+    players.filter(
+      p => p.team === "B"
+    ).length;
+
+
+  if(A < 2){
+    return "A";
+  }
+
+  return "B";
+
+}
+
+
+/* =====================================
+   LOAD PLAYERS
+===================================== */
+
+async function loadPlayers(){
+
+  if(!gameState.roomId){
+    return;
+  }
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_players")
+      .select("*")
+      .eq(
+        "room_id",
+        gameState.roomId
+      )
+      .order("slot");
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  gameState.players =
+    data || [];
+
+
+  renderPlayers();
+
+  checkMatchReady();
+
+}
+
+
+/* =====================================
+   RENDER PLAYERS
+===================================== */
+
+function renderPlayers(){
+
+  const box =
+    document.getElementById(
+      "players-container"
+    );
+
+
+  if(!box){
+    return;
+  }
+
+
+  if(
+    gameState.players.length === 0
+  ){
+
+    box.innerHTML =
+      "⏳ Waiting for players...";
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    gameState.players
+      .map(function(player){
+
+        const you =
+          player.player_id ===
+          playerId;
+
+        const team =
+          player.team
+            ? " • Team " + player.team
+            : "";
+
+        return `
+
+          <div class="player-item">
+
+            ${you ? "🟢" : "👤"}
+
+            <b>
+              ${you ? "You" : "Player"}
+            </b>
+
+            ${team}
+
+            <span style="
+              float:right;
+              color:#20e060;
+            ">
+              ${player.ready
+                ? "READY"
+                : "JOINED"}
+            </span>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =====================================
+   CHECK MATCH
+===================================== */
+
+function checkMatchReady(){
+
+  const total =
+    gameState.players.length;
+
+
+  const required =
+    gameState.mode === "1v1"
+      ? 2
+      : 4;
+
+
+  if(total < required){
+
+    updateStatus(
+      `⏳ Waiting for players... ${total}/${required}`
+    );
+
+    return;
+
+  }
+
+
+  if(
+    gameState.mode === "2v2"
+  ){
+
+    const A =
+      gameState.players.filter(
+        p => p.team === "A"
+      );
+
+    const B =
+      gameState.players.filter(
+        p => p.team === "B"
+      );
+
+
+    if(
+      A.length !== 2 ||
+      B.length !== 2
+    ){
+
+      updateStatus(
+        "⚠️ Teams are not balanced."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  updateStatus(
+    "✅ Players found. Match can start."
+  );
+
+
+  showStartButton();
+
+}
+
+
+/* =====================================
+   START BUTTON
+===================================== */
+
+function showStartButton(){
+
+  const status =
+    document.getElementById(
+      "team-status"
+    );
+
+  if(!status){
+    return;
+  }
+
+
+  status.innerHTML = `
+
+    <span style="color:#20e060;">
+      ✅ MATCH READY
+    </span>
+
+    <br>
+
+    <button
+      class="lobby-action"
+      style="margin-top:12px;"
+      onclick="startOnlineGame()"
+    >
+      🎲 START ONLINE GAME
+    </button>
+
+  `;
+
+}
+
+
+/* =====================================
+   START ONLINE GAME
+===================================== */
+
+async function startOnlineGame(){
+
+  const required =
+    gameState.mode === "1v1"
+      ? 2
+      : 4;
+
+
+  if(
+    gameState.players.length !==
+    required
+  ){
+
+    alert(
+      "Not enough players."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    এখানে এখন শুধু game screen খুলছে।
+    আসল dice/move server validation
+    পরের backend game engine-এ হবে।
+  */
+
+
+  const {error} =
+    await supabaseClient
+      .from("match_rooms")
+      .update({
+        status:"playing"
+      })
+      .eq(
+        "id",
+        gameState.roomId
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Could not start online match."
+    );
+
+    return;
+
+  }
+
+
+  createGameBoard();
+
+}
+
+
+/* =====================================
+   GAME BOARD
+===================================== */
+
+function createGameBoard(){
+
+  const lobby =
+    document.getElementById(
+      "game-lobby"
+    );
+
+
+  if(lobby){
+    lobby.remove();
+  }
+
+
+  const old =
+    document.getElementById(
+      "ludo-board"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+
+  const oldInfo =
+    document.getElementById(
+      "game-info"
+    );
+
+  if(oldInfo){
+    oldInfo.remove();
+  }
+
+
+  const board =
+    document.createElement("div");
+
+  board.id =
+    "ludo-board";
+
+
+  for(
+    let i = 1;
+    i <= 25;
+    i++
+  ){
+
+    const cell =
+      document.createElement("div");
+
+    cell.className =
+      "board-cell";
+
+    cell.innerText =
+      i;
+
+    board.appendChild(cell);
+
+  }
+
+
+  const container =
+    document.querySelector(
+      ".container"
+    );
+
+  const security =
+    document.querySelector(
+      ".security"
+    );
+
+
+  container.insertBefore(
+    board,
+    security
+  );
+
+
+  const info =
+    document.createElement("div");
+
+  info.id =
+    "game-info";
+
+  info.className =
+    "game-info";
+
+
+  info.innerHTML = `
+
+    🎲 ${gameState.level}
+
+    <br>
+
+    ${
+      gameState.mode === "1v1"
+        ? "👤 1 vs 1 Online"
+        : "👥 2 vs 2 Team"
+    }
+
+    <br>
+
+    <span style="
+      color:#20e060;
+      font-size:15px;
+    ">
+      Players: ${gameState.players.length}
+    </span>
+
+  `;
+
+
+  board.after(info);
+
+
+  const dice =
+    document.createElement("button");
+
+  dice.className =
+    "dice-btn";
+
+  dice.innerHTML =
+    "🎲 ROLL DICE";
+
+
+  dice.onclick =
+    function(){
+
+      alert(
+        "Server-side dice engine will handle the real roll."
+      );
+
+    };
+
+
+  info.after(dice);
+
+
+  window.scrollTo({
+    top:board.offsetTop - 20,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function updateStatus(message){
+
+  const status =
+    document.getElementById(
+      "team-status"
+    );
+
+
+  if(status){
+
+    status.innerHTML =
+      message;
+
+  }
+
+}
+
+
+/* =====================================
+   REALTIME
+===================================== */
+
+function subscribeToRoom(){
+
+  if(!gameState.roomId){
+    return;
+  }
+
+
+  if(gameState.channel){
+
+    supabaseClient.removeChannel(
+      gameState.channel
+    );
+
+  }
+
+
+  gameState.channel =
+    supabaseClient
+      .channel(
+        "ludo-room-" +
+        gameState.roomId
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"match_players",
+          filter:
+            "room_id=eq." +
+            gameState.roomId
+        },
+        function(){
+
+          loadPlayers();
+
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"match_rooms",
+          filter:
+            "id=eq." +
+            gameState.roomId
+        },
+        function(payload){
+
+          if(
+            payload.new &&
+            payload.new.status ===
+            "playing"
+          ){
+
+            loadPlayers();
+
+          }
+
+        }
+      )
+      .subscribe();
+
+}
+
+
+/* =====================================
+   LEAVE LOBBY
+===================================== */
+
+function leaveLobby(){
+
+  if(gameState.channel){
+
+    supabaseClient.removeChannel(
+      gameState.channel
+    );
+
+    gameState.channel = null;
+
+  }
+
+
+  gameState.level = null;
+
+  gameState.mode = null;
+
+  gameState.entry = 0;
+
+  gameState.reward = 0;
+
+  gameState.roomId = null;
+
+  gameState.roomCode = null;
+
+  gameState.players = [];
+
+
+  const lobby =
+    document.getElementById(
+      "game-lobby"
+    );
+
+  if(lobby){
+    lobby.remove();
+  }
+
+
+  const board =
+    document.getElementById(
+      "ludo-board"
+    );
+
+  if(board){
+    board.remove();
+  }
+
+
+  const info =
+    document.getElementById(
+      "game-info"
+    );
+
+  if(info){
+    info.remove();
+  }
+
+}
+
+
+/* =====================================
+   SUPABASE TEST
+===================================== */
+
+async function testSupabase(){
+
+  const status =
+    document.getElementById(
+      "connection-status"
+    );
+
+
+  try{
+
+    const {error} =
+      await supabaseClient
+        .from("match_rooms")
+        .select("id")
+        .limit(1);
+
+
+    if(error){
+
+      console.error(
+        "Supabase Error:",
+        error
+      );
+
+
+      status.innerHTML =
+        "⚠️ Server connected, but database needs checking.";
+
+      status.style.color =
+        "#ffc400";
+
+      return;
+
+    }
+
+
+    status.innerHTML =
+      "🟢 Secure Server Connected";
+
+    status.style.color =
+      "#20e060";
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    status.innerHTML =
+      "🔴 Server connection failed";
+
+    status.style.color =
+      "#ff5555";
+
+  }
+
+}
+
+
+testSupabase();
+
+</script>
+
+</body>
+</html>
