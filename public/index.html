@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ludo Tournament</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#07122f;
+  color:white;
+  min-height:100vh;
+}
+
+.header{
+  padding:18px;
+  background:#101d49;
+  border-bottom:2px solid #ffc400;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  color:#ffc400;
+}
+
+.wallet{
+  background:#17295d;
+  border:2px solid #ffc400;
+  padding:9px 15px;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+.container{
+  padding:20px;
+  max-width:700px;
+  margin:auto;
+}
+
+.welcome{
+  text-align:center;
+  margin:20px 0;
+}
+
+.welcome h1{
+  color:#ffc400;
+  margin-bottom:10px;
+}
+
+.welcome p{
+  line-height:1.5;
+  color:#d7def5;
+}
+
+.connection-status{
+  text-align:center;
+  margin:15px 0;
+  padding:10px;
+  border-radius:10px;
+  background:#0c1838;
+  color:#20e060;
+}
+
+.match{
+  background:#132653;
+  border:2px solid #263f7d;
+  border-radius:22px;
+  padding:20px;
+  margin:18px 0;
+}
+
+.match h2{
+  color:#ffc400;
+  margin-bottom:15px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  font-size:18px;
+}
+
+.entry{
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.reward{
+  color:#20e060;
+  font-weight:bold;
+}
+
+.start-btn{
+  width:100%;
+  border:none;
+  border-radius:15px;
+  padding:16px;
+  margin-top:15px;
+  background:#0bc83b;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.security{
+  background:#0c1838;
+  border:1px solid #263f7d;
+  border-radius:18px;
+  padding:18px;
+  margin-top:25px;
+}
+
+.security h3{
+  color:#00d9ff;
+  margin-bottom:12px;
+}
+
+.security p{
+  margin:9px 0;
+  color:#cbd5f5;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#101d49;
+  border-top:2px solid #263f7d;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 5px;
+  z-index:1000;
+}
+
+.nav-item{
+  text-align:center;
+  color:#9caad0;
+  font-size:14px;
+}
+
+.nav-item.active{
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.space{
+  height:90px;
+}
+
+/* ============================= */
+/* TEAM LOBBY */
+/* ============================= */
+
+#team-lobby{
+  background:#101f4d;
+  border:2px solid #ffc400;
+  border-radius:22px;
+  padding:20px;
+  margin:20px auto;
+  max-width:650px;
+}
+
+.lobby-title{
+  text-align:center;
+  color:#ffc400;
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.lobby-subtitle{
+  text-align:center;
+  color:#d7def5;
+  margin-bottom:20px;
+}
+
+.room-box{
+  background:#0b1738;
+  border:2px solid #ffc400;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:18px;
+}
+
+.room-title{
+  text-align:center;
+  color:#ffc400;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.room-row{
+  display:flex;
+  gap:8px;
+}
+
+.room-input{
+  flex:1;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #40558e;
+  background:#172b60;
+  color:white;
+  outline:none;
+  text-transform:uppercase;
+}
+
+.create-btn,
+.join-btn,
+.team-btn{
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.create-btn{
+  width:100%;
+  background:#ffc400;
+  color:#111;
+  margin-bottom:10px;
+}
+
+.join-btn{
+  background:#0bc83b;
+  color:white;
+}
+
+.room-info{
+  text-align:center;
+  background:#172b60;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:18px;
+}
+
+.team-box{
+  background:#172b60;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:18px;
+}
+
+.team-a{
+  border:2px solid #ff4444;
+}
+
+.team-b{
+  border:2px solid #448aff;
+}
+
+.team-title-a{
+  color:#ff5555;
+}
+
+.team-title-b{
+  color:#448aff;
+}
+
+.team-slots{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.player-slot{
+  background:#24386f;
+  padding:14px 8px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.empty-slot{
+  background:#0b1738;
+  padding:14px 8px;
+  border-radius:12px;
+  text-align:center;
+  color:#9caad0;
+}
+
+.team-btn{
+  width:100%;
+  margin-top:14px;
+  color:white;
+  font-size:17px;
+}
+
+.team-a-btn{
+  background:#ff4444;
+}
+
+.team-b-btn{
+  background:#448aff;
+}
+
+.status-box{
+  text-align:center;
+  padding:15px;
+  background:#0b1738;
+  border-radius:12px;
+  color:#ffc400;
+  font-weight:bold;
+}
+
+.start-game-btn{
+  background:#0bc83b;
+  color:white;
+  border:0;
+  padding:14px 30px;
+  border-radius:12px;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+/* ============================= */
+/* BOARD */
+/* ============================= */
+
+#ludo-board{
+  width:330px;
+  height:330px;
+  margin:25px auto;
+  background:white;
+  border:5px solid #ffc400;
+  border-radius:15px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-template-rows:repeat(5,1fr);
+  gap:2px;
+  padding:5px;
+}
+
+.board-cell{
+  background:#e9edf5;
+  border:1px solid #777;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:#222;
+}
+
+.game-info{
+  text-align:center;
+  color:#ffc400;
+  font-size:20px;
+  font-weight:bold;
+  margin:15px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="logo">
+    🎲 Ludo Tournament
+  </div>
+
+  <div class="wallet">
+    💰 0 ৳
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <section class="welcome">
+
+    <h1>🏆 Play & Win</h1>
+
+    <p>
+      Join Ludo tournaments and compete with other players.
+    </p>
+
+  </section>
+
+
+  <div
+    id="connection-status"
+    class="connection-status"
+  >
+    🔄 Connecting to secure server...
+  </div>
+
+
+  <!-- BRONZE -->
+
+  <div class="match">
+
+    <h2>👑 Bronze 🥉</h2>
+
+    <div class="row">
+      <span>Entry Fee:</span>
+      <span class="entry">10 ৳</span>
+    </div>
+
+    <div class="row">
+      <span>Win Reward:</span>
+      <span class="reward">18 ৳</span>
+    </div>
+
+    <button
+      class="start-btn"
+      onclick="startMatch('Bronze')"
+    >
+      ▶ START MATCH
+    </button>
+
+  </div>
+
+
+  <!-- SILVER -->
+
+  <div class="match">
+
+    <h2>👑 Silver 🥈</h2>
+
+    <div class="row">
+      <span>Entry Fee:</span>
+      <span class="entry">20 ৳</span>
+    </div>
+
+    <div class="row">
+      <span>Win Reward:</span>
+      <span class="reward">36 ৳</span>
+    </div>
+
+    <button
+      class="start-btn"
+      onclick="startMatch('Silver')"
+    >
+      ▶ START MATCH
+    </button>
+
+  </div>
+
+
+  <!-- GOLD -->
+
+  <div class="match">
+
+    <h2>👑 Gold 🥇</h2>
+
+    <div class="row">
+      <span>Entry Fee:</span>
+      <span class="entry">50 ৳</span>
+    </div>
+
+    <div class="row">
+      <span>Win Reward:</span>
+      <span class="reward">90 ৳</span>
+    </div>
+
+    <button
+      class="start-btn"
+      onclick="startMatch('Gold')"
+    >
+      ▶ START MATCH
+    </button>
+
+  </div>
+
+
+  <!-- SECURITY -->
+
+  <div class="security">
+
+    <h3>
+      🤖 High Security System
+    </h3>
+
+    <p>🛡️ Automatic Anti-Cheat Checking</p>
+    <p>🎲 Server-Side Dice Validation</p>
+    <p>🔍 Suspicious Activity Detection</p>
+    <p>⚡ Real-Time Game Validation</p>
+    <p>🔐 Secure Player Authentication</p>
+
+  </div>
+
+  <div class="space"></div>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <div class="nav-item active">
+    🏠<br>Home
+  </div>
+
+  <div class="nav-item">
+    💼<br>Wallet
+  </div>
+
+  <div class="nav-item">
+    👥<br>Refer
+  </div>
+
+  <div class="nav-item">
+    🎮<br>Game
+  </div>
+
+</nav>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+  "https://ohrbvijivfwvmlgnhzmp.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_ywFDW9RIMqXOkBXky1p7vA_3KnoqJev";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================
+   GAME STATE
+===================================== */
+
+const teamGame = {
+
+  matchType:null,
+
+  roomId:null,
+
+  roomCode:null,
+
+  myPlayerId:
+    localStorage.getItem("ludo_player_id") ||
+    crypto.randomUUID(),
+
+  myTeam:null,
+
+  mySlot:null,
+
+  players:[],
+
+  channel:null
+
+};
+
+
+localStorage.setItem(
+  "ludo_player_id",
+  teamGame.myPlayerId
+);
+
+
+/* =====================================
+   START MATCH
+===================================== */
+
+async function startMatch(type){
+
+  teamGame.matchType = type;
+
+  showTeamLobby(type);
+
+}
+
+
+/* =====================================
+   SHOW TEAM LOBBY
+===================================== */
+
+function showTeamLobby(type){
+
+  const oldLobby =
+    document.getElementById("team-lobby");
+
+  if(oldLobby){
+    oldLobby.remove();
+  }
+
+
+  const oldBoard =
+    document.getElementById("ludo-board");
+
+  if(oldBoard){
+    oldBoard.remove();
+  }
+
+
+  const oldGameInfo =
+    document.getElementById("game-info");
+
+  if(oldGameInfo){
+    oldGameInfo.remove();
+  }
+
+
+  const lobby =
+    document.createElement("div");
+
+  lobby.id = "team-lobby";
+
+
+  lobby.innerHTML = `
+
+    <div class="lobby-title">
+      🎲 ${type} Team Match
+    </div>
+
+    <div class="lobby-subtitle">
+      4 Players • 2 vs 2
+    </div>
+
+
+    <div class="room-box">
+
+      <div class="room-title">
+        🔑 TEAM ROOM
+      </div>
+
+      <button
+        class="create-btn"
+        onclick="createRoom()"
+      >
+        🏠 CREATE NEW ROOM
+      </button>
+
+      <div class="room-row">
+
+        <input
+          id="room-code-input"
+          class="room-input"
+          placeholder="ENTER ROOM CODE"
+          maxlength="6"
+        >
+
+        <button
+          class="join-btn"
+          onclick="joinRoom()"
+        >
+          JOIN
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="room-info"
+      class="room-info"
+    >
+      🔑 Create or join a room
+    </div>
+
+
+    <!-- TEAM A -->
+
+    <div class="team-box team-a">
+
+      <h2 class="team-title-a">
+        🔴 TEAM A
+      </h2>
+
+      <div
+        id="teamA"
+        class="team-slots"
+      ></div>
+
+      <button
+        class="team-btn team-a-btn"
+        id="join-team-a"
+        onclick="joinTeam('A')"
+      >
+        JOIN TEAM A
+      </button>
+
+    </div>
+
+
+    <!-- TEAM B -->
+
+    <div class="team-box team-b">
+
+      <h2 class="team-title-b">
+        🔵 TEAM B
+      </h2>
+
+      <div
+        id="teamB"
+        class="team-slots"
+      ></div>
+
+      <button
+        class="team-btn team-b-btn"
+        id="join-team-b"
+        onclick="joinTeam('B')"
+      >
+        JOIN TEAM B
+      </button>
+
+    </div>
+
+
+    <div
+      id="team-status"
+      class="status-box"
+    >
+      👥 Waiting for 4 Players...
+    </div>
+
+  `;
+
+
+  const container =
+    document.querySelector(".container");
+
+  const security =
+    document.querySelector(".security");
+
+
+  container.insertBefore(
+    lobby,
+    security
+  );
+
+
+  renderTeams();
+
+}
+
+
+/* =====================================
+   ROOM CODE
+===================================== */
+
+function generateRoomCode(){
+
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let code = "";
+
+  for(let i=0;i<6;i++){
+
+    code +=
+      chars[
+        Math.floor(
+          Math.random()*chars.length
+        )
+      ];
+
+  }
+
+  return code;
+}
+
+
+/* =====================================
+   CREATE ROOM
+===================================== */
+
+async function createRoom(){
+
+  if(!teamGame.matchType){
+
+    alert("Please select a match first.");
+
+    return;
+  }
+
+
+  const roomCode =
+    generateRoomCode();
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_rooms")
+      .insert({
+
+        room_code:roomCode,
+
+        match_type:
+          teamGame.matchType,
+
+        status:"waiting"
+
+      })
+      .select()
+      .single();
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Room creation failed. Check Supabase table/RLS."
+    );
+
+    return;
+  }
+
+
+  teamGame.roomId =
+    data.id;
+
+  teamGame.roomCode =
+    data.room_code;
+
+
+  showRoomInfo();
+
+  subscribeToRoom();
+
+  updateStatus(
+    "✅ Room created. Choose your team."
+  );
+
+}
+
+
+/* =====================================
+   SHOW ROOM
+===================================== */
+
+function showRoomInfo(){
+
+  const info =
+    document.getElementById("room-info");
+
+  if(!info) return;
+
+
+  info.innerHTML = `
+
+    <div style="color:#9caad0;font-size:14px;">
+      ROOM CODE
+    </div>
+
+    <div style="
+      color:#ffc400;
+      font-size:30px;
+      font-weight:bold;
+      letter-spacing:5px;
+      margin:6px;
+    ">
+      ${teamGame.roomCode}
+    </div>
+
+    <div style="color:#20e060;font-size:14px;">
+      Share this code with your teammates
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================
+   JOIN ROOM
+===================================== */
+
+async function joinRoom(){
+
+  const input =
+    document.getElementById(
+      "room-code-input"
+    );
+
+
+  if(!input){
+
+    alert("Room input not found.");
+
+    return;
+  }
+
+
+  const code =
+    input.value
+      .trim()
+      .toUpperCase();
+
+
+  if(!code){
+
+    alert("Enter Room Code.");
+
+    return;
+  }
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_rooms")
+      .select("*")
+      .eq("room_code",code)
+      .eq("status","waiting")
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(error);
+
+    alert("Database error while finding room.");
+
+    return;
+  }
+
+
+  if(!data){
+
+    alert(
+      "Room not found or match already started."
+    );
+
+    return;
+  }
+
+
+  teamGame.roomId =
+    data.id;
+
+  teamGame.roomCode =
+    data.room_code;
+
+  teamGame.matchType =
+    data.match_type;
+
+
+  showRoomInfo();
+
+  await loadPlayers();
+
+  subscribeToRoom();
+
+  updateStatus(
+    "✅ Room joined. Choose your team."
+  );
+
+}
+
+
+/* =====================================
+   JOIN TEAM
+===================================== */
+
+async function joinTeam(team){
+
+  if(!teamGame.roomId){
+
+    alert(
+      "First create or join a room."
+    );
+
+    return;
+  }
+
+
+  const {data:existing,error} =
+    await supabaseClient
+      .from("match_players")
+      .select("*")
+      .eq(
+        "room_id",
+        teamGame.roomId
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Could not load players."
+    );
+
+    return;
+  }
+
+
+  const players =
+    existing || [];
+
+
+  const alreadyJoined =
+    players.find(
+      p =>
+        p.player_id ===
+        teamGame.myPlayerId
+    );
+
+
+  if(alreadyJoined){
+
+    teamGame.myTeam =
+      alreadyJoined.team;
+
+    teamGame.mySlot =
+      alreadyJoined.slot;
+
+    alert(
+      "You already joined Team " +
+      alreadyJoined.team
+    );
+
+    return;
+  }
+
+
+  const teamPlayers =
+    players.filter(
+      p => p.team === team
+    );
+
+
+  if(teamPlayers.length >= 2){
+
+    alert(
+      "Team " + team + " is full."
+    );
+
+    return;
+  }
+
+
+  const slot =
+    teamPlayers.some(
+      p => p.slot === 1
+    )
+      ? 2
+      : 1;
+
+
+  const {error:insertError} =
+    await supabaseClient
+      .from("match_players")
+      .insert({
+
+        room_id:
+          teamGame.roomId,
+
+        player_id:
+          teamGame.myPlayerId,
+
+        player_name:
+          "Player",
+
+        team:team,
+
+        slot:slot,
+
+        ready:false
+
+      });
+
+
+  if(insertError){
+
+    console.error(insertError);
+
+    alert(
+      "Unable to join team. Check match_players RLS."
+    );
+
+    return;
+  }
+
+
+  teamGame.myTeam = team;
+
+  teamGame.mySlot = slot;
+
+
+  await loadPlayers();
+
+
+  updateStatus(
+    "✅ Joined Team " +
+    team +
+    ". Waiting for other players..."
+  );
+
+}
+
+
+/* =====================================
+   LOAD PLAYERS
+===================================== */
+
+async function loadPlayers(){
+
+  if(!teamGame.roomId){
+    return;
+  }
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("match_players")
+      .select("*")
+      .eq(
+        "room_id",
+        teamGame.roomId
+      )
+      .order("team")
+      .order("slot");
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+  }
+
+
+  teamGame.players =
+    data || [];
+
+
+  const me =
+    teamGame.players.find(
+      p =>
+        p.player_id ===
+        teamGame.myPlayerId
+    );
+
+
+  if(me){
+
+    teamGame.myTeam =
+      me.team;
+
+    teamGame.mySlot =
+      me.slot;
+
+  }
+
+
+  renderTeams();
+
+  checkPlayers();
+
+}
+
+
+/* =====================================
+   REALTIME
+===================================== */
+
+function subscribeToRoom(){
+
+  if(!teamGame.roomId){
+    return;
+  }
+
+
+  if(teamGame.channel){
+
+    supabaseClient.removeChannel(
+      teamGame.channel
+    );
+
+  }
+
+
+  teamGame.channel =
+    supabaseClient
+      .channel(
+        "ludo-room-" +
+        teamGame.roomId
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"match_players",
+          filter:
+            "room_id=eq." +
+            teamGame.roomId
+        },
+        function(){
+
+          loadPlayers();
+
+        }
+      )
+      .subscribe();
+
+}
+
+
+/* =====================================
+   RENDER TEAMS
+===================================== */
+
+function renderTeams(){
+
+  const teamA =
+    document.getElementById("teamA");
+
+  const teamB =
+    document.getElementById("teamB");
+
+
+  if(!teamA || !teamB){
+    return;
+  }
+
+
+  const A =
+    teamGame.players.filter(
+      p => p.team === "A"
+    );
+
+
+  const B =
+    teamGame.players.filter(
+      p => p.team === "B"
+    );
+
+
+  teamA.innerHTML =
+    createPlayerSlots(
+      A,
+      "🔴"
+    );
+
+
+  teamB.innerHTML =
+    createPlayerSlots(
+      B,
+      "🔵"
+    );
+
+}
+
+
+/* =====================================
+   PLAYER SLOTS
+===================================== */
+
+function createPlayerSlots(
+  players,
+  icon
+){
+
+  let html = "";
+
+
+  for(let i=1;i<=2;i++){
+
+    const player =
+      players.find(
+        p => p.slot === i
+      );
+
+
+    if(player){
+
+      const isMe =
+        player.player_id ===
+        teamGame.myPlayerId;
+
+
+      html += `
+
+        <div class="player-slot">
+
+          ${icon}
+          ${isMe ? "You" : "Player"}
+
+          <br>
+
+          <small style="color:#20e060;">
+            ${player.ready ? "READY" : "JOINED"}
+          </small>
+
+        </div>
+
+      `;
+
+    }else{
+
+      html += `
+
+        <div class="empty-slot">
+          👤 Empty Slot
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+  return html;
+
+}
+
+
+/* =====================================
+   CHECK PLAYERS
+===================================== */
+
+function checkPlayers(){
+
+  const total =
+    teamGame.players.length;
+
+
+  const status =
+    document.getElementById(
+      "team-status"
+    );
+
+
+  if(!status) return;
+
+
+  const A =
+    teamGame.players.filter(
+      p => p.team === "A"
+    );
+
+
+  const B =
+    teamGame.players.filter(
+      p => p.team === "B"
+    );
+
+
+  if(total < 4){
+
+    status.innerHTML =
+      `⏳ Waiting for players... ${total}/4`;
+
+    return;
+  }
+
+
+  if(A.length !== 2 || B.length !== 2){
+
+    status.innerHTML =
+      "⚠️ Need 2 players in each team.";
+
+    return;
+  }
+
+
+  status.innerHTML = `
+
+    <span style="color:#20e060;">
+      ✅ 4 PLAYERS READY
+    </span>
+
+    <br>
+
+    <button
+      class="start-game-btn"
+      onclick="startTeamGame()"
+    >
+      🎲 START TEAM GAME
+    </button>
+
+  `;
+
+}
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function updateStatus(message){
+
+  const status =
+    document.getElementById(
+      "team-status"
+    );
+
+
+  if(status){
+
+    status.innerHTML =
+      message;
+
+  }
+
+}
+
+
+/* =====================================
+   START GAME
+===================================== */
+
+function startTeamGame(){
+
+  if(teamGame.players.length !== 4){
+
+    alert(
+      "Four players are required."
+    );
+
+    return;
+  }
+
+
+  const A =
+    teamGame.players.filter(
+      p => p.team === "A"
+    );
+
+
+  const B =
+    teamGame.players.filter(
+      p => p.team === "B"
+    );
+
+
+  if(A.length !== 2 || B.length !== 2){
+
+    alert(
+      "Team A and Team B must each have 2 players."
+    );
+
+    return;
+  }
+
+
+  createFourPlayerBoard();
+
+}
+
+
+/* =====================================
+   BASIC BOARD
+===================================== */
+
+function createFourPlayerBoard(){
+
+  const lobby =
+    document.getElementById(
+      "team-lobby"
+    );
+
+
+  if(lobby){
+    lobby.remove();
+  }
+
+
+  const oldBoard =
+    document.getElementById(
+      "ludo-board"
+    );
+
+
+  if(oldBoard){
+    oldBoard.remove();
+  }
+
+
+  const board =
+    document.createElement("div");
+
+
+  board.id =
+    "ludo-board";
+
+
+  for(let i=1;i<=25;i++){
+
+    const cell =
+      document.createElement("div");
+
+
+    cell.className =
+      "board-cell";
+
+
+    cell.innerText =
+      i;
+
+
+    board.appendChild(cell);
+
+  }
+
+
+  const container =
+    document.querySelector(
+      ".container"
+    );
+
+
+  const security =
+    document.querySelector(
+      ".security"
+    );
+
+
+  container.insertBefore(
+    board,
+    security
+  );
+
+
+  const info =
+    document.createElement("div");
+
+
+  info.id =
+    "game-info";
+
+
+  info.className =
+    "game-info";
+
+
+  info.innerHTML =
+    "🔴 Team A vs 🔵 Team B<br>" +
+    "👥 4 Player Match";
+
+
+  board.after(info);
+
+}
+
+
+/* =====================================
+   CONNECTION TEST
+===================================== */
+
+async function testSupabase(){
+
+  const status =
+    document.getElementById(
+      "connection-status"
+    );
+
+
+  try{
+
+    const {error} =
+      await supabaseClient
+        .from("match_rooms")
+        .select("id")
+        .limit(1);
+
+
+    if(error){
+
+      console.error(
+        "Supabase Error:",
+        error
+      );
+
+      status.innerHTML =
+        "⚠️ Supabase connected but database table needs checking";
+
+      status.style.color =
+        "#ffc400";
+
+      return;
+    }
+
+
+    status.innerHTML =
+      "🟢 Secure Server Connected";
+
+    status.style.color =
+      "#20e060";
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    status.innerHTML =
+      "🔴 Server connection failed";
+
+    status.style.color =
+      "#ff5555";
+
+  }
+
+}
+
+
+testSupabase();
+
+</script>
+
+</body>
+</html>
